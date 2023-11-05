@@ -1,0 +1,59 @@
+body {
+    background-color: #4444aa;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.column {
+    float: left;
+    width: 17%;
+  }
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#rank1 {
+    background-color: #aa4444;
+}
+
+#rank2 {
+    background-color: #44aa44;
+}
+
+#rank3 {
+    background-color: #44aaaa;
+}
+
+#rank4 {
+    background-color: #aa44aa;
+}
+
+#rank5 {
+    background-color: #aaaa44;
+}
+
+#timeline {
+    background-color: #5555aa;
+}
+
+.node {
+    background-color: #b0e3f0;
+    border-color:#995555;
+    border-width:2px;
+    border-style:inset ;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 5px;
+}
+
+.spacer {
+    visibility: hidden;
+}
