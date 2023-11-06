@@ -4,7 +4,22 @@ let existingSprites = ["erin", "ryoka", "horns"];
 
 yamlString = YAML.stringify(timeline);
 
-// addSpacers(0);
+
+// prepopulate the timeline with empty cells
+for(let r = 0; r < timeline.length; r++) {
+    timeline[r].id = r;
+    for(let c = 0; c < 5; c++) {
+        let gridItem = document.createElement("div");
+        gridItem.className = "nodeContainer";
+        gridItem.id = "cell-" + r + "-" + c;
+
+        //let textNode = document.createTextNode("cell-" +  r + "-" + c);
+        //gridItem.append(textNode);
+
+        document.getElementById("timeline").append(gridItem);
+    }
+}
+
 let prev = null;
 for(let i = 0; i < timeline.length; i++) {
     let info = timeline[i];
@@ -12,22 +27,74 @@ for(let i = 0; i < timeline.length; i++) {
     
     let node = createNode(info);
 
-    document.getElementById("rank" + info.rank).appendChild(node);
-    addSpacers(info.rank);
+    // document.getElementById("rank" + info.rank).appendChild(node);
+    // rank is a node's importance, but it doesn't correspond to a left to right
+    // indexing. The rank of each column is actually: 4 2 1 3 5 (6 goes here if ever we need it)
+    let place = placeFor(info.rank);
+    cell(i, place).append(node);
 
     if(info.prereqs) {
         drawArrows(info, prev);
     }
-    if(info.type == "jump") {
-        addSpacer(info.rank);
-        let spacer = addSpacer(info.rank);
+
+    // This part should create a dashed arrow coming from above, for threads continued from very far above.
+    if(info.from) {
+        let portal = document.createElement("div");
+        portal.className = "portal";
+
+        let predecessor = chapters[info.from];
+        let link = document.createElement("a");
+        link.href = predecessor.url;
+        link.title = predecessor.title;
+    
+        let heading = document.createTextNode(predecessor.title);
+        link.append(heading);    
+        portal.append(link);
+
+        cell(i-1, place).append(portal);
+        
         new LeaderLine(
-            document.getElementById("c" + info.id),
-            spacer,
+            portal,
+            tile(info.id),
             {dash: true}
         );
     }
-    prev = info.title;
+
+    // This section adds a dummy node for dashed lines to extend outwards to.
+    // Use dashed lines if a node simply has too many children, or if 
+    // the solid arrow it would otherwise draw is unreasonably long.
+    if(info.type == "jump") {
+        let portal = document.createElement("div");
+        portal.className = "portal";
+        cell(i+1, place).append(portal);
+
+        new LeaderLine(
+            tile(info.id), 
+            portal,
+            {dash: true}
+        );
+    }
+    prev = info;
+}
+
+function placeFor(rank) {
+    switch(rank) {
+        case 1: return 2; 
+        case 2: return 1; 
+        case 3: return 3; 
+        case 4: return 0; 
+        case 5: return 4; 
+        case 6: return 5; 
+        default: return -1; // this should never happen
+    }
+}
+
+function cell(r, c) {
+    return document.getElementById("cell-" + r + "-" + c);
+}
+
+function tile(id) {
+    return document.getElementById("c" + id);
 }
 
 function drawArrows(info, prev) {
@@ -36,23 +103,28 @@ function drawArrows(info, prev) {
     // You can still manually specify a title, and you'll have to if
     // there's multiple parents.
     if (info.prereqs == "p") { 
-        let start = "c" + chapters[prev].id;
-        let end = "c" + info.id;
+        info.prereqs = [prev.title];
+    }
+    for (let j = 0; j < info.prereqs.length; j++) {
+        let start = chapters[info.prereqs[j]].id;
+        let end = info.id;
+
+        let sCol = placeFor(chapters[info.prereqs[j]].rank);
+        let eCol = placeFor(info.rank);
+
+        let socketDest = "top";
+        if(sCol < eCol) {
+            socketDest = "left";
+        } else if (sCol > eCol) {
+            socketDest = "right";
+        }
 
         new LeaderLine(
-            document.getElementById(start),
-            document.getElementById(end),
+            tile(start),
+            tile(end),
+            {startSocket: 'bottom',
+             endSocket: socketDest}
         );
-    } else {
-        for (let j = 0; j < info.prereqs.length; j++) {
-            let start = "c" + chapters[info.prereqs[j]].id;
-            let end = "c" + info.id;
-
-            new LeaderLine(
-                document.getElementById(start),
-                document.getElementById(end),
-            );
-        }
     }
 }
 
@@ -85,17 +157,20 @@ function createNode(info) {
 
 function addSprites(node, info) {
     if(info.povs) {
-        let charDiv = document.createElement("div");
+        let charDiv = document.createElement("span");
         charDiv.className = "povList";
     
         for(let i = 0; i < info.povs.length; i++) {
             let char = info.povs[i];
+
+            let span = document.createElement("span");
+            span.className = "povSprite";
+
+            span.title = char;
             if (!existingSprites.includes(char)) {
                 char = "unknown";
             }
 
-            let span = document.createElement("span");
-            span.className = "povSprite";
             // span.src = "sprites/" + char + "-sprite.png";
             span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
             charDiv.append(span);
@@ -104,18 +179,20 @@ function addSprites(node, info) {
     }
 
     if(info.guests) {
-        let charDiv = document.createElement("div");
+        let charDiv = document.createElement("span");
         charDiv.className = "guestList";
     
         for(let i = 0; i < info.povs.length; i++) {
             let char = info.guests[i];
+
+            let span = document.createElement("span");
+            span.className = "guestSprite";
+
+            span.title = char;
             if (!existingSprites.includes(char)) {
                 char = "unknown";
             }
 
-            let span = document.createElement("span");
-            span.className = "guestSprite";
-            // span.src = "sprites/" + char + "-sprite.png";
             span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
             charDiv.append(span);
         }
@@ -123,18 +200,4 @@ function addSprites(node, info) {
     }
 }
 
-function addSpacers(rank) {
-    for (let r = 1; r <= 5; r++) {
-        if (r != rank) {
-            addSpacer(r);
-        }
-    }
-}
-
-function addSpacer(r) {
-    let spacer = document.createElement("div");
-    spacer.className = "spacer node";
-    document.getElementById("rank" + r).appendChild(spacer);
-    return spacer;
-}
 
