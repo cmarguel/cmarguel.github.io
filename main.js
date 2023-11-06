@@ -5,7 +5,7 @@ yamlString = YAML.stringify(timeline);
 
 // addSpacers(0);
 let prev = null;
-for(i = 0; i < timeline.length; i++) {
+for(let i = 0; i < timeline.length; i++) {
     let info = timeline[i];
     chapters[info.title] = info;
     
@@ -43,7 +43,7 @@ function drawArrows(info, prev) {
             document.getElementById(end),
         );
     } else {
-        for (j = 0; j < info.prereqs.length; j++) {
+        for (let j = 0; j < info.prereqs.length; j++) {
             let start = "c" + chapters[info.prereqs[j]].id;
             let end = "c" + info.id;
 
@@ -68,11 +68,45 @@ function createNode(info) {
     link.append(heading);    
     node.append(link);
 
+    addSprites(node, info);
+
     return node;
 }
 
+function addSprites(node, info) {
+    if(info.povs) {
+        let charDiv = document.createElement("div");
+        charDiv.className = "povList";
+    
+        for(let i = 0; i < info.povs.length; i++) {
+            let char = info.povs[i];
+            let span = document.createElement("div");
+            span.className = "povSprite";
+            // span.src = "sprites/" + char + "-sprite.png";
+            span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
+            charDiv.append(span);
+        }
+        node.append(charDiv);
+    }
+
+    if(info.guests) {
+        let charDiv = document.createElement("div");
+        charDiv.className = "guestList";
+    
+        for(let i = 0; i < info.povs.length; i++) {
+            let char = info.guests[i];
+            let span = document.createElement("div");
+            span.className = "guestSprite";
+            // span.src = "sprites/" + char + "-sprite.png";
+            span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
+            charDiv.append(span);
+        }
+        node.append(charDiv);
+    }
+}
+
 function addSpacers(rank) {
-    for (r = 1; r <= 5; r++) {
+    for (let r = 1; r <= 5; r++) {
         if (r != rank) {
             addSpacer(r);
         }

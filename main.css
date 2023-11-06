@@ -1,5 +1,5 @@
 body {
-    background-color: #4444aa;
+    background-color: #212133;
 
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -15,7 +15,7 @@ body {
     display: table;
     clear: both;
 }
-
+/*
 #rank1 {
     background-color: #aa4444;
 }
@@ -34,17 +34,18 @@ body {
 
 #rank5 {
     background-color: #aaaa44;
-}
+}*/
 
 #timeline {
     background-color: #5555aa;
 }
 
 .node {
-    background-color: #b0e3f0;
-    border-color:#995555;
+    background-color: #2d2d46;
+    /* background-color: #b0e3f0; */
+    border-color:#9398df;
     border-width:2px;
-    border-style:inset ;
+    border-style: solid;
     border-radius: 5px;
     width: 50px;
     height: 50px;
@@ -54,6 +55,41 @@ body {
     padding: 5px;
 }
 
+.node a:link {
+    color: #aaaaff;
+}
+
+.node a:visited {
+    color: #aa5a99;
+}
+
 .spacer {
     visibility: hidden;
+}
+
+.povList, .guestList {
+    margin-top:10px;
+    padding: 2px;
+    float:left;
+    /* background-color: #232341; */
+}
+
+.povSprite {
+    float:left;
+    margin:2px;
+
+    -webkit-filter: drop-shadow(1px 1px 0 yellow)
+    drop-shadow(-1px -1px 0 yellow);
+    filter: drop-shadow(1px 1px 0 yellow) 
+    drop-shadow(-1px -1px 0 yellow);
+}
+
+.guestSprite {
+    float:left;
+    margin:2px;
+
+    -webkit-filter: drop-shadow(1px 1px 0 rgb(110, 110, 255))
+    drop-shadow(-1px -1px 0 rgb(110, 110, 255));
+    filter: drop-shadow(1px 1px 0 rgb(110, 110, 255)) 
+    drop-shadow(-1px -1px 0 rgb(110, 110, 255));
 }
