@@ -6,6 +6,13 @@
   prereqs: null
   rank: 1
   povs: [erin]
+  catchup: >
+          The start of the saga. If you see a node like this, it means important plot 
+          threads have converged here, and you can hover over them to get a quick
+          overview of what points from each thread you might need to know--in case you 
+          forgot, or skipped a few chapters.
+
+
 -
   id: 1
   title: "1.01"
@@ -146,6 +153,7 @@
   prereqs: null
   rank: 2
   povs: [ryoka]
+  catchup: "This chapter focuses on a character introduced in Interlude - The Great Ritual."
 -
   id: 21
   title: "1.20 R"
@@ -159,30 +167,36 @@
   url: "https://wanderinginn.com/2017/03/03/rw1-21/"
   prereqs: ["1.18"]
   rank: 1
+  povs: [erin]
 -
   id: 23
   title: "1.22"
   url: "https://wanderinginn.com/2017/03/03/rw1-22/"
   prereqs: ["1.21"]
   rank: 1
+  povs: [erin]
 -
   id: 24
   title: "1.23 A"
   url: "https://wanderinginn.com/2017/03/03/rw1-23-a/"
   prereqs: ["1.18"]
   rank: 3
+  povs: [klbkch]
 -
   id: 25
   title: "1.24"
   url: "https://wanderinginn.com/2017/03/04/rw1-24/"
   prereqs: ["1.22", "1.23 A"]
   rank: 1
+  povs: [erin]
 -
   id: 26
   title: "Interlude - King Edition"
   url: "https://wanderinginn.com/2017/03/04/rwinterlude-king-edition/"
   prereqs: null
   rank: 5
+  povs: [flos]
+  catchup: "This chapter focuses on multiple characters introduced in Interlude - The Great Ritual."
   type: jump
 -
   id: 27
@@ -190,6 +204,7 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-25/"
   prereqs: ["1.24"]
   rank: 1
+  povs: [erin]
 -
   id: 28
   title: "1.26 R"
@@ -210,24 +225,28 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-28-a/"
   prereqs: ["1.25"]
   rank: 3
+  povs: [klbkch]
 -
   id: 31
   title: "1.29"
   url: "https://wanderinginn.com/2017/03/04/rw1-29/"
   prereqs: ["1.25", "1.28 A"]
   rank: 1
+  povs: [erin]
 -
   id: 32
   title: "1.30"
   url: "https://wanderinginn.com/2017/03/04/rw1-30/"
   prereqs: ["1.29"]
   rank: 1
+  povs: [erin]
 -
   id: 33
   title: "1.31"
   url: "https://wanderinginn.com/2017/03/04/rw1-31/"
   prereqs: ["1.30"]
   rank: 1
+  povs: [erin]
 -
   id: 34
   title: "1.32 R"
@@ -248,6 +267,7 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-34/"
   prereqs: ["1.31"]
   rank: 1
+  povs: [erin]
 -
   id: 37
   title: "1.35 R"
@@ -261,18 +281,21 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-36/"
   prereqs: ["1.34"]
   rank: 1
+  povs: [erin]
 -
   id: 39
   title: "1.37"
   url: "https://wanderinginn.com/2017/03/04/rw1-37/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 40
   title: "1.38"
   url: "https://wanderinginn.com/2017/03/04/rw1-38/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 41
   title: "1.39 R"
@@ -293,12 +316,14 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-41/"
   prereqs: ["1.38"]
   rank: 1
+  povs: [erin]
 -
   id: 44
   title: "1.42"
   url: "https://wanderinginn.com/2017/03/04/rw1-42/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 45
   title: "1.43 R"
@@ -351,6 +376,7 @@
   rank: 1
   povs: [erin]
   guests: [horns]
+  catchup: "Ryoka very toxically cut ties with a team of adventurers she befriended--the same adventurers who now find themselves at The Wandering Inn."
 -
   id: 52
   title: "1.50"
@@ -380,12 +406,14 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-51/"
   prereqs: ["1.51"]
   rank: 1
+  povs: [erin]
 -
   id: 56
   title: "1.54"
   url: "https://wanderinginn.com/2017/03/04/rw1-54/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 57
   title: "1.55 R"
@@ -399,6 +427,7 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-56/"
   prereqs: ["1.54"]
   rank: 1
+  povs: [erin]
 -
   id: 59
   title: "1.57 H"
@@ -426,18 +455,21 @@
   url: "https://wanderinginn.com/2017/03/04/rw1-60/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 63
   title: "1.61"
   url: "https://wanderinginn.com/2017/03/04/rw1-61/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 64
   title: "1.62"
   url: "https://wanderinginn.com/2017/03/04/rw1-62/"
   prereqs: p
   rank: 1
+  povs: [erin]
 -
   id: 65
   title: "1.63"

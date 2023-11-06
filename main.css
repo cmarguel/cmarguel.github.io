@@ -47,12 +47,21 @@ body {
     border-width:2px;
     border-style: solid;
     border-radius: 5px;
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    max-width: 100px;
+    width:min-content;
+    height:50px;
+    /* min-height: 50px; 
+    overflow:hidden; */
     margin: auto;
     margin-top: 40px;
     margin-bottom: 40px;
     padding: 5px;
+}
+
+.dataNode {
+    border-style: double !important;
+    border-width: 5px !important;
 }
 
 .node a:link {
@@ -75,8 +84,8 @@ body {
 }
 
 .povSprite {
-    float:left;
     margin:2px;
+    float:left;
 
     -webkit-filter: drop-shadow(1px 1px 0 yellow)
     drop-shadow(-1px -1px 0 yellow);
@@ -85,11 +94,50 @@ body {
 }
 
 .guestSprite {
-    float:left;
     margin:2px;
+    float:left;
 
     -webkit-filter: drop-shadow(1px 1px 0 rgb(110, 110, 255))
     drop-shadow(-1px -1px 0 rgb(110, 110, 255));
     filter: drop-shadow(1px 1px 0 rgb(110, 110, 255)) 
     drop-shadow(-1px -1px 0 rgb(110, 110, 255));
 }
+
+/***** Tooltip CSS copied and modified from W3Schools *****/
+  .dataNode {
+    /* Have no idea why this is required for the tooltip to work. -- Miguel */
+    position: relative;
+  }
+
+  /* Tooltip text */
+  .dataNode .dataPanel {
+    visibility: hidden;
+    width: 250px !important; 
+    width:min-content;
+    background-color: #f1fcff;
+    color: #262236;
+    text-align: center;
+    padding: 15px 15px;
+
+    border-color: #aaaaff;
+    border-style: solid;
+    border-radius: 6px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -125%;
+    left: 250%;
+    margin-left: -60px;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .dataNode:hover .dataPanel {
+    visibility: visible;
+    opacity: 1;
+  } 
+/***** End of Tooltip CSS copied and modified from W3Schools *****/

@@ -1,5 +1,6 @@
 let timeline = YAML.load('timeline.yml'); 
 let chapters = {};
+let existingSprites = ["erin", "ryoka", "horns"];
 
 yamlString = YAML.stringify(timeline);
 
@@ -59,6 +60,15 @@ function createNode(info) {
     var node = document.createElement("div");
     node.id = "c" + info.id;
     node.className = "node";
+    if (info.catchup) {
+        node.className += " dataNode";
+
+        var dataPanel = document.createElement("div");
+        dataPanel.className = "dataPanel";
+        var catchupText = document.createTextNode(info.catchup);
+        dataPanel.append(catchupText);
+        node.append(dataPanel);
+    }
 
     var link = document.createElement("a");
     link.href = info.url;
@@ -80,7 +90,11 @@ function addSprites(node, info) {
     
         for(let i = 0; i < info.povs.length; i++) {
             let char = info.povs[i];
-            let span = document.createElement("div");
+            if (!existingSprites.includes(char)) {
+                char = "unknown";
+            }
+
+            let span = document.createElement("span");
             span.className = "povSprite";
             // span.src = "sprites/" + char + "-sprite.png";
             span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
@@ -95,7 +109,11 @@ function addSprites(node, info) {
     
         for(let i = 0; i < info.povs.length; i++) {
             let char = info.guests[i];
-            let span = document.createElement("div");
+            if (!existingSprites.includes(char)) {
+                char = "unknown";
+            }
+
+            let span = document.createElement("span");
             span.className = "guestSprite";
             // span.src = "sprites/" + char + "-sprite.png";
             span.style = "height: 16px; width: 16px; background-image: url(sprites/" + char + "-sprite.png);";
