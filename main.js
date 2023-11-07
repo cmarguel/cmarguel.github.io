@@ -4,24 +4,22 @@ let existingSprites = ["erin", "ryoka", "horns"];
 
 yamlString = YAML.stringify(timeline);
 
-
 // prepopulate the timeline with empty cells
 for(let r = 0; r < timeline.length; r++) {
     timeline[r].id = r;
-    for(let c = 0; c < 5; c++) {
-        let gridItem = document.createElement("div");
-        gridItem.className = "nodeContainer";
-        gridItem.id = "cell-" + r + "-" + c;
 
-        //let textNode = document.createTextNode("cell-" +  r + "-" + c);
-        //gridItem.append(textNode);
-
-        document.getElementById("timeline").append(gridItem);
+    if(timeline[r].heading) {
+        createHeading(timeline[r].title);
+    } else {
+        fillRowWithEmptyCells(r);
     }
 }
 
 let prev = null;
 for(let i = 0; i < timeline.length; i++) {
+    if (timeline[i].heading) {
+        continue;
+    }
     let info = timeline[i];
     chapters[info.title] = info;
     
@@ -77,6 +75,42 @@ for(let i = 0; i < timeline.length; i++) {
     prev = info;
 }
 
+let relc = document.createElement("img");
+relc.src = "bg/relc.png"
+cell(8, 3).append(relc);
+let klb = document.createElement("img");
+klb.src = "bg/klb.png"
+cell(10, 1).append(klb);
+
+// LeaderLine doesn't draw arrows quite right at the start, but resizing the window
+// corrects it--this leads me to think it's drawing arrows using an outdated DOM,
+// but I can't figure out where that's happening. So I cheat and just trigger the 
+// resize event... which might be costly later on but should be okay for now.
+window.dispatchEvent(new Event('resize'));
+
+/*** END ONLOAD CODE ***/
+
+/*** FUNCTIONS ***/
+function createHeading(title) {
+    let heading = document.createElement("div");
+    heading.className = "heading";
+    let titleText = document.createTextNode(title);
+    heading.append(titleText);
+    document.getElementById("timeline").append(heading);
+}
+
+function fillRowWithEmptyCells(r) {
+    for (let c = 0; c < 5; c++) {
+        let gridItem = document.createElement("div");
+        gridItem.className = "nodeContainer";
+        gridItem.id = "cell-" + r + "-" + c;
+
+        //let textNode = document.createTextNode("cell-" +  r + "-" + c);
+        //gridItem.append(textNode);
+        document.getElementById("timeline").append(gridItem);
+    }
+}
+
 function placeFor(rank) {
     switch(rank) {
         case 1: return 2; 
@@ -113,25 +147,27 @@ function drawArrows(info, prev) {
         let eCol = placeFor(info.rank);
 
         let socketStart = "bottom";
-        let socketDest  = "top";
-
-        if(sCol < eCol) {
+        let socketEnd  = "top";
+        
+        if (sCol < eCol && eCol <= 2) {
+            socketEnd = "left";
+        } else if (sCol < eCol && sCol >= 2) {
             socketStart = "right";
-        } else if (sCol > eCol) {
+        } else if (sCol > eCol && sCol <= 2) {
             socketStart = "left";
-        }
-
-        if(sCol < eCol) {
-            socketDest = "left";
-        } else if (sCol > eCol) {
-            socketDest = "right";
+        } else if (sCol > eCol && eCol >= 2) {
+            socketEnd = "right";
+        } else if (sCol != 2 && eCol != 2) {
+            socketStart = "auto";
+            socketEnd = "auto";
         }
 
         new LeaderLine(
             tile(start),
             tile(end),
             {startSocket: socketStart,
-             endSocket: socketDest}
+             endSocket: socketEnd,
+            dropShadow: {dx:-3, dy:-3}}
         );
     }
 }
